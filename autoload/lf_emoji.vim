@@ -2,7 +2,6 @@
 " FileName: lf_emoji.vim
 " Author: voldikss <dyzplus@gmail.com>
 " GitHub: https://github.com/voldikss
-" Origin: https://github.com/yazgoo/unicodemoji/blob/master/plugin/unicodemoji.vim
 " ============================================================================
 
 let s:path = fnamemodify(resolve(expand('<sfile>:p')), ':h')
@@ -15,5 +14,10 @@ function! lf_emoji#accept(line,...)
 endfunction
 
 function! lf_emoji#source(args)
-  return systemlist(s:path . '/emoji --no-fzf')
+  if a:args['arg_line'] =~ 'gitmoji'
+    let file = 'gitmoji.txt'
+  else
+    let file = 'emoji.txt'
+  endif
+  return systemlist(printf('cat %s/%s', s:path, file))
 endfunction
